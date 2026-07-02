@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsApp Scheduler</title>
+  <meta name="description" content="Schedule WhatsApp messages — one-time or daily recurring with random message selection." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ═══ LOGIN ═══ -->
+  <div id="login-screen" class="screen active">
+    <div class="login-bg"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+    <div class="login-card glass">
+      <div class="login-logo">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.29-1.248l-.308-.184-2.87.852.852-2.87-.184-.308A7.96 7.96 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+      </div>
+      <h1 class="login-title">WhatsApp Scheduler</h1>
+      <p class="login-subtitle">Sign in to schedule your messages</p>
+      <form id="login-form" autocomplete="off">
+        <div class="input-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="Enter your email" required />
+        </div>
+        <div class="input-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Enter your password" required />
+        </div>
+        <div id="login-error" class="error-msg hidden"></div>
+        <button type="submit" id="login-btn" class="btn btn-primary btn-full">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div id="dashboard-screen" class="screen">
+    <header class="topbar glass">
+      <div class="topbar-left"><span class="topbar-title">📱 WhatsApp Scheduler</span></div>
+      <div class="topbar-right">
+        <div id="wa-status-badge" class="status-badge disconnected">
+          <span class="status-dot"></span><span class="status-text">Disconnected</span>
+        </div>
+        <button id="logout-btn" class="btn btn-ghost">Logout</button>
+      </div>
+    </header>
+
+    <main class="dashboard-main">
+      <!-- QR Card -->
+      <section class="card glass qr-card">
+        <h2>🔗 Connect WhatsApp</h2>
+        <div id="qr-container" class="qr-container">
+          <div id="qr-placeholder" class="qr-placeholder">
+            <button id="connect-wa-btn" class="btn btn-accent btn-lg">Connect WhatsApp</button>
+            <p class="qr-hint">Click to generate QR code</p>
+          </div>
+          <div id="qr-loading" class="qr-loading hidden"><div class="spinner"></div><p>Generating QR Code...</p></div>
+          <div id="qr-image-wrapper" class="qr-image-wrapper hidden">
+            <img id="qr-image" alt="WhatsApp QR Code" />
+            <p class="qr-scan-hint">Scan this QR with WhatsApp on your phone</p>
+          </div>
+          <div id="qr-connected" class="qr-connected hidden">
+            <div class="connected-icon">✅</div>
+            <h3>WhatsApp Connected!</h3>
+            <p>You can now schedule messages</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Schedule Form -->
+      <section class="card glass schedule-card">
+        <h2>⏰ Schedule a Message</h2>
+        <form id="schedule-form">
+          <!-- Phone -->
+          <div class="input-group">
+            <label for="sched-phone">Phone Number</label>
+            <input type="tel" id="sched-phone" placeholder="+919876543210" required />
+            <span class="input-hint">Include country code (e.g. +91 for India)</span>
+          </div>
+
+          <!-- Type Toggle -->
+          <div class="input-group">
+            <label>Schedule Type</label>
+            <div class="toggle-group">
+              <button type="button" class="toggle-btn active" data-type="once" id="toggle-once">📅 One-Time</button>
+              <button type="button" class="toggle-btn" data-type="daily" id="toggle-daily">🔁 Daily (Alarm)</button>
+            </div>
+          </div>
+
+          <!-- Time: one-time -->
+          <div class="input-group" id="once-time-group">
+            <label for="sched-datetime">Date &amp; Time</label>
+            <input type="datetime-local" id="sched-datetime" />
+          </div>
+
+          <!-- Time: daily -->
+          <div class="input-group hidden" id="daily-time-group">
+            <label for="sched-daily-time">Daily Time</label>
+            <input type="time" id="sched-daily-time" />
+            <span class="input-hint">Message will be sent every day at this time</span>
+          </div>
+
+          <!-- Messages List -->
+          <div class="input-group">
+            <label>Messages <span class="label-hint">(one random message will be picked each time)</span></label>
+            <div id="messages-list" class="messages-list">
+              <div class="msg-entry">
+                <textarea class="msg-input" rows="2" placeholder="Message variant 1..." required></textarea>
+              </div>
+            </div>
+            <button type="button" id="add-msg-btn" class="btn btn-outline btn-sm">+ Add Another Message Variant</button>
+          </div>
+
+          <div id="schedule-error" class="error-msg hidden"></div>
+          <div id="schedule-success" class="success-msg hidden"></div>
+          <button type="submit" id="schedule-btn" class="btn btn-primary btn-full">📨 Schedule Message</button>
+        </form>
+      </section>
+
+      <!-- Jobs List -->
+      <section class="card glass jobs-card">
+        <h2>📋 Scheduled Messages <span id="job-count" class="badge">0</span></h2>
+        <div id="jobs-list" class="jobs-list">
+          <div class="empty-state"><p>No scheduled messages yet</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

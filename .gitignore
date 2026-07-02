@@ -1,0 +1,37 @@
+# ─── Dependencies ───
+node_modules/
+
+# ─── Environment variables (secrets) ───
+.env
+.env.local
+.env.production
+
+# ─── WhatsApp session data ───
+.wwebjs_auth/
+.wwebjs_cache/
+
+# ─── App data ───
+scheduled_data.json
+
+# ─── OS files ───
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── IDE / Editor ───
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── Logs ───
+*.log
+npm-debug.log*
+
+# ─── Build artifacts ───
+dist/
+build/
+
+# ─── Vercel / Render ───
+.vercel/

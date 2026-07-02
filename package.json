@@ -1,0 +1,19 @@
+{
+  "name": "whatsapp-scheduler",
+  "version": "1.0.0",
+  "description": "WhatsApp Message Scheduler with QR Authentication",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.0",
+    "node-schedule": "^2.1.1",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.7.5",
+    "whatsapp-web.js": "^1.26.1-alpha.1"
+  }
+}
