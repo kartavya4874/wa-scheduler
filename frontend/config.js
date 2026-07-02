@@ -12,5 +12,5 @@
 const CONFIG = Object.freeze({
   API_URL: window.location.hostname === 'localhost'
     ? 'http://localhost:3000'
-    : 'https://wa-scheduler-5dsj.onrender.com',
+    : 'https://wa-scheduler-u2en.onrender.com',
 });
