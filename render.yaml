@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: whatsapp-scheduler-docker
+    env: docker
+    rootDir: backend
+    plan: free
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: FRONTEND_URL
+        value: https://wa-scheduler-five.vercel.app
+      - key: VALID_EMAIL
+        sync: false
+      - key: VALID_PASSWORD
+        sync: false
