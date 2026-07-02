@@ -167,10 +167,7 @@ function renumberMessages() {
 function initSocket() {
   if (socket) return;
   // Connect to the Render backend URL
-  socket = io(API_URL, {
-    transports: ['websocket', 'polling'],
-    withCredentials: true
-  });
+  socket = io(API_URL);
 
   socket.on('connect', () => {
     console.log('🔌 Socket connected to backend');
