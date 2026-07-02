@@ -12,5 +12,5 @@
 const CONFIG = Object.freeze({
   API_URL: window.location.hostname === 'localhost'
     ? 'http://localhost:3000'
-    : 'https://YOUR-RENDER-APP.onrender.com',  // ← Replace with your Render URL after deploying
+    : 'https://wa-scheduler-5dsj.onrender.com',
 });
