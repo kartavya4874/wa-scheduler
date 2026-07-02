@@ -12,5 +12,5 @@
 const CONFIG = Object.freeze({
   API_URL: window.location.hostname === 'localhost'
     ? 'http://localhost:3000'
-    : 'https://wa-scheduler-u2en.onrender.com',
+    : 'https://whatsapp-scheduler-docker.onrender.com',
 });
